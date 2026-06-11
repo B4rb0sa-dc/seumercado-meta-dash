@@ -10,596 +10,690 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --meta-blue: #0866ff;
+      --meta-blue-dark: #075bd8;
+      --bg: #f0f2f5;
+      --surface: #ffffff;
+      --surface-2: #f7f8fa;
+      --line: #dfe3eb;
+      --line-soft: #edf0f5;
+      --text: #1c2b33;
+      --muted: #667085;
+      --green: #12b76a;
+      --red: #f04438;
+      --orange: #f79009;
+      --shadow: 0 2px 10px rgba(16, 24, 40, 0.08);
+      --radius: 12px;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #111827;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button,
+    select,
+    input {
+      font-family: inherit;
+    }
+
+    .topbar {
+      height: 56px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--meta-blue);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      background: var(--surface-2);
+    }
+
+    .btn-primary {
+      background: var(--meta-blue);
+      color: #ffffff;
+      border-color: var(--meta-blue);
+    }
+
+    .btn-primary:hover {
+      background: var(--meta-blue-dark);
+      border-color: var(--meta-blue-dark);
+    }
+
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
     }
 
     .container {
-      max-width: 1240px;
+      max-width: 1420px;
       margin: 0 auto;
-      padding: 32px 20px 56px;
+      padding: 20px 18px 56px;
     }
 
-    .header {
+    .page-heading {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 20px;
-      margin-bottom: 24px;
+      gap: 16px;
+      margin-bottom: 14px;
     }
 
-    .title-area h1 {
-      margin: 0 0 8px;
-      font-size: 34px;
-      color: #1877f2;
+    .page-title {
+      margin: 0 0 6px;
+      font-size: 24px;
+      color: var(--text);
+      letter-spacing: -0.02em;
     }
 
-    .title-area p {
+    .page-copy {
       margin: 0;
-      color: #6b7280;
-      font-size: 15px;
+      color: var(--muted);
+      font-size: 14px;
     }
 
-    .refresh-button {
+    .manager-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .manager-tabs {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding: 10px 12px 0;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+      overflow-x: auto;
+    }
+
+    .tab-button {
       border: none;
-      background: #1877f2;
-      color: #ffffff;
-      padding: 12px 18px;
-      border-radius: 10px;
+      background: transparent;
+      color: var(--muted);
+      padding: 12px 14px 11px;
       cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 6px 18px rgba(24, 119, 242, 0.25);
+      font-weight: 800;
+      font-size: 14px;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
     }
 
-    .filters {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 18px 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    .tab-button.active {
+      color: var(--meta-blue);
+      border-bottom-color: var(--meta-blue);
+    }
+
+    .toolbar {
+      padding: 12px;
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr auto;
-      gap: 14px;
+      grid-template-columns: minmax(220px, 1.35fr) 180px 180px auto;
+      gap: 10px;
       align-items: end;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
     }
 
     .field {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
     }
 
     .field label {
-      font-size: 13px;
-      font-weight: bold;
-      color: #4b5563;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
     }
 
     select,
     input[type="date"] {
-      height: 42px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      padding: 0 12px;
-      font-size: 14px;
-      color: #111827;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 10px;
+      font-size: 13px;
       background: #ffffff;
+      color: var(--text);
     }
 
-    .apply-button {
-      height: 42px;
-      border: none;
-      border-radius: 10px;
-      background: #111827;
-      color: #ffffff;
-      padding: 0 16px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .status-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 18px 20px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-      color: #4b5563;
+    .context-row {
       display: flex;
       justify-content: space-between;
       gap: 16px;
+      align-items: center;
+      padding: 12px 14px;
+      background: #fbfcfe;
+      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .crumb {
+      border: none;
+      background: transparent;
+      padding: 0;
+      color: var(--meta-blue);
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .crumb.current {
+      color: var(--text);
+      cursor: default;
+    }
+
+    .context-meta {
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      gap: 14px;
       flex-wrap: wrap;
     }
 
     .cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 28px;
+      gap: 12px;
+      margin: 14px 0;
     }
 
-    .card {
-      background: #ffffff;
-      padding: 22px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
     }
 
-    .card .label {
-      color: #6b7280;
-      font-size: 14px;
-      margin-bottom: 10px;
+    .metric-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
     }
 
-    .card .value {
-      font-size: 28px;
-      font-weight: bold;
-      color: #020617;
+    .metric-value {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -0.02em;
     }
 
-    .card .small {
-      margin-top: 8px;
-      font-size: 13px;
-      color: #9ca3af;
+    .metric-helper {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
     }
 
-    .charts-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 18px;
-      margin-bottom: 30px;
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    .chart-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-      min-height: 360px;
-    }
-
-    .chart-header {
+    .table-header {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 12px;
-      margin-bottom: 12px;
+      background: var(--surface);
     }
 
-    .chart-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #111827;
+    .table-title {
       margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text);
     }
 
-    .chart-subtitle {
-      font-size: 13px;
-      color: #6b7280;
+    .table-subtitle {
       margin: 0;
-    }
-
-    .legend {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin: 10px 0 4px;
+      color: var(--muted);
       font-size: 13px;
-      color: #4b5563;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .chart-svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .donut-layout {
-      display: grid;
-      grid-template-columns: 210px 1fr;
-      gap: 20px;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    .donut-legend {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 13px;
-    }
-
-    .donut-legend-row {
-      display: grid;
-      grid-template-columns: 12px 1fr auto;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .donut-name {
-      color: #374151;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .donut-value {
-      color: #111827;
-      font-weight: bold;
-    }
-
-    .empty-chart {
-      padding: 40px 10px;
-      text-align: center;
-      color: #6b7280;
-      font-size: 14px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin: 32px 0 16px;
-    }
-
-    .section-title {
-      margin: 0;
-      font-size: 24px;
-      color: #111827;
-    }
-
-    .dimension-buttons {
-      display: flex;
-      gap: 8px;
-      background: #ffffff;
-      padding: 6px;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    }
-
-    .dimension-button {
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
-      color: #374151;
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .dimension-button.active {
-      background: #1877f2;
-      color: #ffffff;
-      border-color: #1877f2;
     }
 
     .table-wrapper {
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
       overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1220px;
+      min-width: 1280px;
     }
 
-    th, td {
-      padding: 16px;
+    th,
+    td {
+      border-bottom: 1px solid var(--line-soft);
+      padding: 12px 10px;
+      font-size: 13px;
+      vertical-align: middle;
       text-align: left;
-      border-bottom: 1px solid #eef0f4;
-      font-size: 14px;
-      vertical-align: top;
     }
 
     th {
-      background: #f9fafb;
-      color: #4b5563;
-      font-weight: bold;
+      background: #f5f6f7;
+      color: #475467;
+      font-weight: 900;
       position: sticky;
-      top: 0;
-      z-index: 1;
+      top: 56px;
+      z-index: 3;
     }
 
-    td {
-      color: #111827;
+    tbody tr {
+      background: #ffffff;
+    }
+
+    tbody tr:hover {
+      background: #f5f9ff;
+    }
+
+    tbody tr.clickable-row {
+      cursor: pointer;
     }
 
     .sort-button {
-      width: 100%;
       border: none;
       background: transparent;
-      color: inherit;
-      font: inherit;
-      font-weight: bold;
-      text-align: left;
-      cursor: pointer;
       padding: 0;
-      display: flex;
+      font: inherit;
+      font-weight: 900;
+      color: inherit;
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
 
     .sort-indicator {
-      color: #1877f2;
-      font-size: 12px;
+      color: var(--meta-blue);
+      font-size: 11px;
     }
 
-    .dimension-name {
-      font-weight: bold;
-      margin-bottom: 4px;
+    .entity-cell {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      min-width: 260px;
+      align-items: center;
     }
 
-    .dimension-id {
-      font-size: 12px;
-      color: #6b7280;
+    .check-square {
+      width: 16px;
+      height: 16px;
+      border: 1px solid #98a2b3;
+      border-radius: 4px;
+      background: #ffffff;
+    }
+
+    .entity-name-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .entity-name {
+      font-weight: 900;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 420px;
+    }
+
+    .entity-id {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 3px;
       word-break: break-all;
     }
 
+    .drill-icon {
+      color: var(--meta-blue);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
 
     .status-badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 6px 10px;
+      padding: 5px 9px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: bold;
+      font-weight: 900;
       white-space: nowrap;
     }
 
     .status-active {
-      background: #dcfce7;
-      color: #166534;
+      color: #067647;
+      background: #dcfae6;
     }
 
     .status-inactive {
-      background: #fee2e2;
-      color: #991b1b;
+      color: #b42318;
+      background: #fee4e2;
     }
 
     .status-missing {
-      background: #f3f4f6;
-      color: #6b7280;
+      color: #475467;
+      background: #eaecf0;
+    }
+
+    .delivery {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      color: #344054;
+      font-weight: 700;
+    }
+
+    .delivery-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      display: inline-block;
+    }
+
+    .delivery-dot.off {
+      background: #98a2b3;
+    }
+
+    .numeric {
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .ai-analysis-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-top: 16px;
+      overflow: hidden;
+    }
+
+    .ai-analysis-header {
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .ai-analysis-title {
+      margin: 0 0 4px;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .ai-analysis-subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .ai-analysis-output {
+      padding: 16px;
+      line-height: 1.65;
+      color: #344054;
+      font-size: 14px;
+      white-space: pre-line;
+      background: #fbfcfe;
+      min-height: 86px;
     }
 
     .loading,
     .error {
-      background: #ffffff;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
       padding: 28px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      box-shadow: var(--shadow);
       text-align: center;
+      color: var(--muted);
     }
 
     .error {
-      color: #b91c1c;
+      color: #b42318;
     }
 
-    .muted {
-      color: #6b7280;
+    .empty-state {
+      padding: 34px 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
     }
 
-    @media (max-width: 1000px) {
+    @media (max-width: 1080px) {
       .cards {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .charts-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .donut-layout {
-        grid-template-columns: 1fr;
-        justify-items: center;
-      }
-
-      .donut-legend {
-        width: 100%;
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
-    @media (max-width: 700px) {
-      .container {
-        padding: 20px 12px 40px;
-      }
-
-      .header,
-      .section-header {
-        flex-direction: column;
+    @media (max-width: 720px) {
+      .topbar {
+        height: auto;
         align-items: flex-start;
+        gap: 12px;
+        padding: 12px;
+        flex-direction: column;
       }
 
-      .refresh-button {
+      th {
+        top: 0;
+      }
+
+      .container {
+        padding: 14px 10px 40px;
+      }
+
+      .page-heading,
+      .ai-analysis-header,
+      .table-header {
+        flex-direction: column;
+      }
+
+      .topbar-actions,
+      .topbar-actions .btn,
+      .ai-analysis-header .btn {
         width: 100%;
       }
 
-      .filters {
+      .toolbar {
         grid-template-columns: 1fr;
-        padding: 16px;
-      }
-
-      .status-card {
-        display: block;
-      }
-
-      .status-card > div {
-        margin-bottom: 8px;
       }
 
       .cards {
         grid-template-columns: 1fr;
-        gap: 12px;
       }
 
-      .card {
-        padding: 18px;
-      }
-
-      .card .value {
-        font-size: 24px;
-      }
-
-      .chart-card {
-        padding: 16px;
-        min-height: auto;
-      }
-
-      .chart-header {
-        flex-direction: column;
-      }
-
-      .dimension-buttons {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr;
-      }
-
-      .dimension-button {
-        width: 100%;
-      }
-
-      .table-wrapper {
-        background: transparent;
-        box-shadow: none;
-        border-radius: 0;
-        overflow-x: visible;
-      }
-
-      table,
-      thead,
-      tbody,
-      th,
-      td,
-      tr {
-        display: block;
-      }
-
-      table {
-        min-width: 0;
-      }
-
-      thead {
-        display: none;
-      }
-
-      tbody {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      tr {
-        background: #ffffff;
-        border-radius: 16px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-        padding: 12px;
-      }
-
-      td {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 14px;
-        border-bottom: 1px solid #eef0f4;
-        padding: 12px 4px;
-        font-size: 13px;
-        text-align: right;
-      }
-
-      td:last-child {
-        border-bottom: none;
-      }
-
-      td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #4b5563;
-        text-align: left;
-        min-width: 110px;
-      }
-
-      td:first-child {
-        display: block;
-        text-align: left;
-      }
-
-      td:first-child::before {
-        display: block;
-        margin-bottom: 8px;
+      .metric-value {
+        font-size: 21px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="title-area">
-        <h1>Meta Ads Dashboard</h1>
-        <p>Acompanhamento dos principais indicadores por período.</p>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">f</div>
+      <div>
+        <h1 class="brand-title">Meta Ads Dashboard</h1>
+        <p class="brand-subtitle">Leitura por campanha, conjunto e anúncio</p>
       </div>
+    </div>
 
-      <button class="refresh-button" onclick="loadDashboard()">
-        Atualizar dados
-      </button>
+    <div class="topbar-actions">
+      <button class="btn" onclick="resetNavigation()">Ver campanhas</button>
+      <button class="btn btn-primary" onclick="loadDashboard()">Atualizar dados</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-heading">
+      <div>
+        <h2 class="page-title">Gerenciador de anúncios</h2>
+        <p class="page-copy">Clique em uma campanha para ver seus conjuntos. Depois, clique em um conjunto para ver os anúncios relacionados.</p>
+      </div>
     </div>
 
     <div id="dashboard">
       <div class="loading">Carregando dados...</div>
     </div>
-  </div>
+  </main>
 
   <script>
     let dashboardData = null;
     let currentPeriod = "last_7d";
     let currentCustomStart = "";
     let currentCustomEnd = "";
-    let currentDimension = "campaign";
+    let currentView = "campaign";
+    let selectedCampaign = null;
+    let selectedAdset = null;
+    let currentVisibleItems = [];
+    let currentAIContext = null;
 
     let sortState = {
       key: "spend",
       direction: "desc"
     };
 
-    const CHART_COLORS = [
-      "#1877f2",
-      "#10b981",
-      "#f97316",
-      "#f59e0b",
-      "#8b5cf6",
-      "#ef4444"
-    ];
+    const LEVEL_CONFIG = {
+      campaign: {
+        label: "Campanhas",
+        singular: "Campanha",
+        title: "Campanhas",
+        subtitle: "Clique em uma campanha para abrir somente os conjuntos dessa campanha.",
+        nextLabel: "Ver conjuntos",
+        nameKeys: ["campaign_name", "Campaign Name", "Campaign"],
+        idKeys: ["campaign_id", "Campaign ID"]
+      },
+      adset: {
+        label: "Conjuntos",
+        singular: "Conjunto",
+        title: "Conjuntos de anúncios",
+        subtitle: "Clique em um conjunto para abrir somente os anúncios desse conjunto.",
+        nextLabel: "Ver anúncios",
+        nameKeys: ["adset_name", "Adset Name", "Ad Set Name", "Adset"],
+        idKeys: ["adset_id", "Adset ID", "Ad Set ID"]
+      },
+      ad: {
+        label: "Anúncios",
+        singular: "Anúncio",
+        title: "Anúncios",
+        subtitle: "Anúncios filtrados conforme a campanha e o conjunto selecionados.",
+        nextLabel: "",
+        nameKeys: ["ad_name", "Ad Name", "Ad"],
+        idKeys: ["ad_id", "Ad ID"]
+      }
+    };
+
+    function escapeHTML(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
 
     function toNumber(value) {
       if (value === null || value === undefined || value === "") return 0;
 
-      if (typeof value === "object" && value.value !== undefined) {
-        return toNumber(value.value);
-      }
-
-      if (typeof value === "object" && value.Value !== undefined) {
-        return toNumber(value.Value);
-      }
-
+      if (typeof value === "object" && value.value !== undefined) return toNumber(value.value);
+      if (typeof value === "object" && value.Value !== undefined) return toNumber(value.Value);
       if (typeof value === "number") return value;
 
       let text = String(value)
@@ -636,10 +730,6 @@
       });
     }
 
-    function formatShortMoney(value) {
-      return `R$${Math.round(toNumber(value)).toLocaleString("pt-BR")}`;
-    }
-
     function formatNumber(value) {
       return Math.round(toNumber(value)).toLocaleString("pt-BR");
     }
@@ -656,21 +746,13 @@
     }
 
     function safeText(value, fallback = "Não informado") {
-      if (value === null || value === undefined || value === "") {
-        return fallback;
-      }
-
+      if (value === null || value === undefined || value === "") return fallback;
       return value;
     }
 
     function getField(object, ...keys) {
       for (const key of keys) {
-        if (
-          object &&
-          object[key] !== undefined &&
-          object[key] !== null &&
-          object[key] !== ""
-        ) {
+        if (object && object[key] !== undefined && object[key] !== null && object[key] !== "") {
           return object[key];
         }
       }
@@ -680,10 +762,7 @@
 
     function getActionValue(actions) {
       if (!actions) return 0;
-
-      if (!Array.isArray(actions)) {
-        return toNumber(actions);
-      }
+      if (!Array.isArray(actions)) return toNumber(actions);
 
       const targetActionTypes = [
         "onsite_conversion.messaging_conversation_started_7d",
@@ -693,120 +772,60 @@
       ];
 
       return actions.reduce((total, action) => {
-        const type = String(
-          action.action_type ||
-          action["Action Type"] ||
-          action.type ||
-          ""
-        ).toLowerCase();
-
-        if (!targetActionTypes.includes(type)) {
-          return total;
-        }
-
+        const type = String(action.action_type || action["Action Type"] || action.type || "").toLowerCase();
+        if (!targetActionTypes.includes(type)) return total;
         return total + toNumber(action.value || action.Value || 0);
       }, 0);
     }
 
     function getMessages(row) {
       const actions = getField(row, "actions", "Actions");
+      if (actions) return getActionValue(actions);
 
-      if (actions) {
-        return getActionValue(actions);
-      }
-
-      const directMessages = getField(
-        row,
-        "messages",
-        "Messages",
-        "results",
-        "Results"
-      );
-
+      const directMessages = getField(row, "messages", "Messages", "results", "Results");
       return toNumber(directMessages);
     }
 
     function getRowDate(row) {
-      return getField(
-        row,
-        "date_start",
-        "Date Start",
-        "dateStart",
-        "date",
-        "Date"
-      );
+      return getField(row, "date_start", "Date Start", "dateStart", "date", "Date");
     }
 
     function dateKey(date) {
-      if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
-        return "";
-      }
-
+      if (!(date instanceof Date) || Number.isNaN(date.getTime())) return "";
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");
       const day = String(date.getDate()).padStart(2, "0");
-
       return `${year}-${month}-${day}`;
     }
 
     function getDateKeyFromValue(value) {
       if (!value) return "";
-
-      if (value instanceof Date) {
-        return dateKey(value);
-      }
+      if (value instanceof Date) return dateKey(value);
 
       const text = String(value).trim();
-
       const isoMatch = text.match(/(\d{4})-(\d{2})-(\d{2})/);
-
-      if (isoMatch) {
-        return `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
-      }
+      if (isoMatch) return `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
 
       const brMatch = text.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
-
-      if (brMatch) {
-        return `${brMatch[3]}-${brMatch[2]}-${brMatch[1]}`;
-      }
+      if (brMatch) return `${brMatch[3]}-${brMatch[2]}-${brMatch[1]}`;
 
       const parsedDate = new Date(text);
-
-      if (Number.isNaN(parsedDate.getTime())) {
-        return "";
-      }
-
+      if (Number.isNaN(parsedDate.getTime())) return "";
       return dateKey(parsedDate);
     }
 
     function parseDate(value) {
       const key = getDateKeyFromValue(value);
-
       if (!key) return null;
-
       const [year, month, day] = key.split("-").map(Number);
-
       return new Date(year, month - 1, day);
     }
 
     function formatDateBR(value) {
       const key = getDateKeyFromValue(value);
-
       if (!key) return "Data não informada";
-
       const [year, month, day] = key.split("-");
-
       return `${day}/${month}/${year}`;
-    }
-
-    function formatDateShort(value) {
-      const key = getDateKeyFromValue(value);
-
-      if (!key) return "";
-
-      const [, month, day] = key.split("-");
-
-      return `${day}/${month}`;
     }
 
     function normalizeRows(data) {
@@ -821,20 +840,15 @@
       }
 
       if (Array.isArray(source)) {
-        return source
-          .flatMap(item => Array.isArray(item) ? item : [item])
-          .filter(Boolean);
+        return source.flatMap(item => Array.isArray(item) ? item : [item]).filter(Boolean);
       }
 
       return [];
     }
 
-
-
     function normalizeStatusRows(data, keys) {
       for (const key of keys) {
         const source = data[key];
-
         if (!source) continue;
 
         if (typeof source === "string") {
@@ -846,9 +860,7 @@
         }
 
         if (Array.isArray(source)) {
-          return source
-            .flatMap(item => Array.isArray(item) ? item : [item])
-            .filter(Boolean);
+          return source.flatMap(item => Array.isArray(item) ? item : [item]).filter(Boolean);
         }
       }
 
@@ -864,9 +876,7 @@
 
       items.forEach(item => {
         const id = getStatusId(item, ...idKeys);
-
         if (!id) return;
-
         map.set(id, item);
       });
 
@@ -876,40 +886,25 @@
     function getStatusSources() {
       const data = dashboardData || {};
 
-      const campaignStatuses = normalizeStatusRows(data, [
-        "campaign_statuses",
-        "campaignStatuses"
-      ]);
-
-      const adsetStatuses = normalizeStatusRows(data, [
-        "adset_statuses",
-        "adsetStatuses"
-      ]);
-
-      const adStatuses = normalizeStatusRows(data, [
-        "ad_statuses",
-        "adStatuses"
-      ]);
-
       return {
-        campaignMap: buildStatusMap(campaignStatuses, "id", "campaign_id", "Campaign ID"),
-        adsetMap: buildStatusMap(adsetStatuses, "id", "adset_id", "Adset ID", "Ad Set ID"),
-        adMap: buildStatusMap(adStatuses, "id", "ad_id", "Ad ID")
+        campaignMap: buildStatusMap(
+          normalizeStatusRows(data, ["campaign_statuses", "campaignStatuses"]),
+          "id", "campaign_id", "Campaign ID"
+        ),
+        adsetMap: buildStatusMap(
+          normalizeStatusRows(data, ["adset_statuses", "adsetStatuses"]),
+          "id", "adset_id", "Adset ID", "Ad Set ID"
+        ),
+        adMap: buildStatusMap(
+          normalizeStatusRows(data, ["ad_statuses", "adStatuses"]),
+          "id", "ad_id", "Ad ID"
+        )
       };
     }
 
     function getRawStatus(statusItem) {
       if (!statusItem) return "";
-
-      return getField(
-        statusItem,
-        "effective_status",
-        "Effective Status",
-        "configured_status",
-        "Configured Status",
-        "status",
-        "Status"
-      );
+      return getField(statusItem, "effective_status", "Effective Status", "configured_status", "Configured Status", "status", "Status");
     }
 
     function normalizeMetaStatus(status) {
@@ -918,92 +913,67 @@
 
     function isActiveStatus(status) {
       const value = normalizeMetaStatus(status);
-
       return value === "ACTIVE" || value === "ENABLED";
     }
 
     function resolveStatusFromValues(statusValues) {
-      const cleanStatuses = statusValues
-        .map(normalizeMetaStatus)
-        .filter(Boolean);
-
-      if (!cleanStatuses.length) {
-        return "NO_STATUS";
-      }
-
-      if (cleanStatuses.some(isActiveStatus)) {
-        return "ACTIVE";
-      }
-
+      const cleanStatuses = statusValues.map(normalizeMetaStatus).filter(Boolean);
+      if (!cleanStatuses.length) return "NO_STATUS";
+      if (cleanStatuses.some(isActiveStatus)) return "ACTIVE";
       return "INACTIVE";
     }
 
     function translateDisplayStatus(status) {
       const value = normalizeMetaStatus(status);
-
       if (value === "ACTIVE") return "Ativo";
       if (value === "INACTIVE") return "Inativo";
-
       return "Sem status";
     }
 
     function getDisplayStatusClass(status) {
       const value = normalizeMetaStatus(status);
-
       if (value === "ACTIVE") return "status-active";
       if (value === "INACTIVE") return "status-inactive";
-
       return "status-missing";
     }
 
     function buildStatusBadge(status) {
       const label = translateDisplayStatus(status);
       const className = getDisplayStatusClass(status);
-
       return `<span class="status-badge ${className}">${label}</span>`;
     }
 
-    function getObjectStatusForRow(row, dimension, statusSources) {
+    function getObjectStatusForRow(row, level, statusSources) {
       const campaignId = String(getField(row, "campaign_id", "Campaign ID") || "").trim();
       const adsetId = String(getField(row, "adset_id", "Adset ID", "Ad Set ID") || "").trim();
       const adId = String(getField(row, "ad_id", "Ad ID") || "").trim();
 
-      if (dimension === "campaign" && campaignId) {
-        const campaignStatus = getRawStatus(statusSources.campaignMap.get(campaignId));
-        if (campaignStatus) return campaignStatus;
+      if (level === "campaign" && campaignId) {
+        const status = getRawStatus(statusSources.campaignMap.get(campaignId));
+        if (status) return status;
       }
 
-      if (dimension === "adset" && adsetId) {
-        const adsetStatus = getRawStatus(statusSources.adsetMap.get(adsetId));
-        if (adsetStatus) return adsetStatus;
+      if (level === "adset" && adsetId) {
+        const status = getRawStatus(statusSources.adsetMap.get(adsetId));
+        if (status) return status;
       }
 
-      if (dimension === "ad" && adId) {
-        const adStatus = getRawStatus(statusSources.adMap.get(adId));
-        if (adStatus) return adStatus;
+      if (level === "ad" && adId) {
+        const status = getRawStatus(statusSources.adMap.get(adId));
+        if (status) return status;
       }
 
       if (adId) {
-        const adStatus = getRawStatus(statusSources.adMap.get(adId));
-        if (adStatus) return adStatus;
+        const status = getRawStatus(statusSources.adMap.get(adId));
+        if (status) return status;
       }
 
       return "";
     }
 
     function getAvailableDateRange(rows) {
-      const keys = rows
-        .map(row => getDateKeyFromValue(getRowDate(row)))
-        .filter(Boolean)
-        .sort();
-
-      if (!keys.length) {
-        return {
-          minDate: null,
-          maxDate: null
-        };
-      }
-
+      const keys = rows.map(row => getDateKeyFromValue(getRowDate(row))).filter(Boolean).sort();
+      if (!keys.length) return { minDate: null, maxDate: null };
       return {
         minDate: parseDate(keys[0]),
         maxDate: parseDate(keys[keys.length - 1])
@@ -1012,50 +982,26 @@
 
     function getPeriodRange(rows, period) {
       const { minDate, maxDate } = getAvailableDateRange(rows);
+      if (!minDate || !maxDate) return { start: null, end: null };
 
-      if (!minDate || !maxDate) {
-        return {
-          start: null,
-          end: null
-        };
-      }
-
-      if (period === "all") {
-        return {
-          start: minDate,
-          end: maxDate
-        };
-      }
+      if (period === "all") return { start: minDate, end: maxDate };
 
       const days = Number(period.replace("last_", "").replace("d", ""));
-
-      if (!days || Number.isNaN(days)) {
-        return {
-          start: minDate,
-          end: maxDate
-        };
-      }
+      if (!days || Number.isNaN(days)) return { start: minDate, end: maxDate };
 
       const start = new Date(maxDate);
       start.setDate(start.getDate() - days + 1);
-
-      return {
-        start,
-        end: maxDate
-      };
+      return { start, end: maxDate };
     }
 
     function filterRowsByDate(rows, start, end) {
       if (!start || !end) return rows;
-
       const startKey = dateKey(start);
       const endKey = dateKey(end);
 
       return rows.filter(row => {
         const rowKey = getDateKeyFromValue(getRowDate(row));
-
         if (!rowKey) return false;
-
         return rowKey >= startKey && rowKey <= endKey;
       });
     }
@@ -1091,45 +1037,54 @@
       return totals;
     }
 
-    function getDimensionConfig(dimension) {
-      const configs = {
-        campaign: {
-          label: "Campanhas",
-          title: "Campanhas por período",
-          nameKeys: ["campaign_name", "Campaign Name", "Campaign"],
-          idKeys: ["campaign_id", "Campaign ID"]
-        },
-        adset: {
-          label: "Conjuntos",
-          title: "Conjuntos por período",
-          nameKeys: ["adset_name", "Adset Name", "Ad Set Name", "Adset"],
-          idKeys: ["adset_id", "Adset ID", "Ad Set ID"]
-        },
-        ad: {
-          label: "Anúncios",
-          title: "Anúncios por período",
-          nameKeys: ["ad_name", "Ad Name", "Ad"],
-          idKeys: ["ad_id", "Ad ID"]
-        }
-      };
-
-      return configs[dimension] || configs.campaign;
+    function getLevelConfig(level) {
+      return LEVEL_CONFIG[level] || LEVEL_CONFIG.campaign;
     }
 
-    function groupRowsByDimension(rows, dimension) {
-      const config = getDimensionConfig(dimension);
+    function getEntityFromRow(row, level) {
+      const config = getLevelConfig(level);
+      return {
+        id: String(getField(row, ...config.idKeys) || "").trim(),
+        name: String(getField(row, ...config.nameKeys) || "").trim()
+      };
+    }
+
+    function entityMatches(row, level, entity) {
+      if (!entity) return true;
+      const rowEntity = getEntityFromRow(row, level);
+
+      if (entity.id && rowEntity.id) return rowEntity.id === String(entity.id);
+      if (entity.name && rowEntity.name) return rowEntity.name === String(entity.name);
+      return false;
+    }
+
+    function getScopedRows(periodRows) {
+      let scopedRows = [...periodRows];
+
+      if (selectedCampaign && (currentView === "adset" || currentView === "ad")) {
+        scopedRows = scopedRows.filter(row => entityMatches(row, "campaign", selectedCampaign));
+      }
+
+      if (selectedAdset && currentView === "ad") {
+        scopedRows = scopedRows.filter(row => entityMatches(row, "adset", selectedAdset));
+      }
+
+      return scopedRows;
+    }
+
+    function groupRowsByLevel(rows, level) {
+      const config = getLevelConfig(level);
       const groups = new Map();
       const statusSources = getStatusSources();
 
       rows.forEach(row => {
-        const dimensionName = getField(row, ...config.nameKeys);
-        const dimensionId = getField(row, ...config.idKeys);
-        const key = dimensionId || dimensionName || "sem-identificacao";
+        const entity = getEntityFromRow(row, level);
+        const key = entity.id || entity.name || "sem-identificacao";
 
         if (!groups.has(key)) {
           groups.set(key, {
-            name: dimensionName,
-            id: dimensionId,
+            name: entity.name,
+            id: entity.id,
             spend: 0,
             messages: 0,
             clicks: 0,
@@ -1141,7 +1096,6 @@
         }
 
         const item = groups.get(key);
-
         item.spend += toNumber(getField(row, "spend", "Spend"));
         item.messages += getMessages(row);
         item.clicks += toNumber(getField(row, "inline_link_clicks", "Inline Link Clicks", "link_clicks"));
@@ -1149,21 +1103,14 @@
         item.reach += toNumber(getField(row, "reach", "Reach"));
 
         const rowKey = getDateKeyFromValue(getRowDate(row));
+        if (rowKey) item.days.add(rowKey);
 
-        if (rowKey) {
-          item.days.add(rowKey);
-        }
-
-        const rowStatus = getObjectStatusForRow(row, dimension, statusSources);
-
-        if (rowStatus) {
-          item.statuses.push(rowStatus);
-        }
+        const rowStatus = getObjectStatusForRow(row, level, statusSources);
+        if (rowStatus) item.statuses.push(rowStatus);
       });
 
       return Array.from(groups.values()).map(item => {
         const status = resolveStatusFromValues(item.statuses);
-
         return {
           ...item,
           status,
@@ -1172,7 +1119,8 @@
           ctr: item.impressions > 0 ? (item.clicks / item.impressions) * 100 : 0,
           cpm: item.impressions > 0 ? (item.spend / item.impressions) * 1000 : 0,
           frequency: item.reach > 0 ? item.impressions / item.reach : 0,
-          daysCount: item.days.size
+          daysCount: item.days.size,
+          level
         };
       });
     }
@@ -1187,7 +1135,6 @@
         if (key === "name" || key === "statusLabel") {
           valueA = String(valueA || "").toLowerCase();
           valueB = String(valueB || "").toLowerCase();
-
           if (valueA < valueB) return direction === "asc" ? -1 : 1;
           if (valueA > valueB) return direction === "asc" ? 1 : -1;
           return 0;
@@ -1195,7 +1142,6 @@
 
         valueA = toNumber(valueA);
         valueB = toNumber(valueB);
-
         return direction === "asc" ? valueA - valueB : valueB - valueA;
       });
     }
@@ -1213,7 +1159,6 @@
 
     function sortIndicator(key) {
       if (sortState.key !== key) return "";
-
       return sortState.direction === "asc" ? "↑" : "↓";
     }
 
@@ -1226,397 +1171,105 @@
       `;
     }
 
-    function buildDimensionTable(rows, dimension) {
-      const groupedRows = sortDimensionRows(groupRowsByDimension(rows, dimension));
-      const config = getDimensionConfig(dimension);
-
-      if (!groupedRows.length) {
-        return `
-          <tr>
-            <td colspan="11">Nenhum dado encontrado para o período selecionado.</td>
-          </tr>
-        `;
-      }
-
-      return groupedRows.map(item => `
-        <tr>
-          <td data-label="Dimensão">
-            <div class="dimension-name">${safeText(item.name, `${config.label} sem nome`)}</div>
-            <div class="dimension-id">ID: ${safeText(item.id, "não informado")}</div>
-          </td>
-          <td data-label="Status">${buildStatusBadge(item.status)}</td>
-          <td data-label="Mensagens">${formatNumber(item.messages)}</td>
-          <td data-label="Custo/mensagem">${formatMoney(item.cpl)}</td>
-          <td data-label="Cliques">${formatNumber(item.clicks)}</td>
-          <td data-label="CTR">${formatPercent(item.ctr)}</td>
-          <td data-label="Investimento">${formatMoney(item.spend)}</td>
-          <td data-label="Impressões">${formatNumber(item.impressions)}</td>
-          <td data-label="Alcance">${formatNumber(item.reach)}</td>
-          <td data-label="CPM">${formatMoney(item.cpm)}</td>
-          <td data-label="Dias">${item.daysCount}</td>
-        </tr>
-      `).join("");
-    }
-
-    function getDateKeysBetween(start, end) {
-      if (!start || !end) return [];
-
-      const keys = [];
-      const cursor = new Date(start);
-
-      while (cursor <= end) {
-        keys.push(dateKey(cursor));
-        cursor.setDate(cursor.getDate() + 1);
-      }
-
-      return keys;
-    }
-
-    function getChartRange(start, end) {
-      if (!start || !end) {
-        return {
-          chartStart: null,
-          chartEnd: null
-        };
-      }
-
-      const chartEnd = new Date(end);
-      const chartStart = new Date(end);
-      chartStart.setDate(chartStart.getDate() - 13);
-
-      if (start > chartStart) {
-        return {
-          chartStart: start,
-          chartEnd
-        };
-      }
-
-      return {
-        chartStart,
-        chartEnd
+    function resetSort() {
+      sortState = {
+        key: "spend",
+        direction: "desc"
       };
     }
 
-    function aggregateDailyRows(rows, start, end) {
-      const keys = getDateKeysBetween(start, end);
-      const map = new Map();
+    function goToLevel(level) {
+      if (level === "campaign") {
+        selectedCampaign = null;
+        selectedAdset = null;
+      }
 
-      keys.forEach(key => {
-        map.set(key, {
-          date: key,
-          spend: 0,
-          messages: 0
-        });
-      });
+      if (level === "adset") {
+        selectedAdset = null;
+      }
 
-      rows.forEach(row => {
-        const key = getDateKeyFromValue(getRowDate(row));
-
-        if (!map.has(key)) return;
-
-        const item = map.get(key);
-
-        item.spend += toNumber(getField(row, "spend", "Spend"));
-        item.messages += getMessages(row);
-      });
-
-      return Array.from(map.values());
+      currentView = level;
+      resetSort();
+      renderDashboard(currentPeriod, currentCustomStart, currentCustomEnd);
     }
 
-    function buildLineChart(rows, start, end) {
-      const { chartStart, chartEnd } = getChartRange(start, end);
+    function resetNavigation() {
+      goToLevel("campaign");
+    }
 
-      if (!chartStart || !chartEnd) {
-        return `<div class="empty-chart">Não há dados suficientes para o gráfico.</div>`;
+    function drillIntoVisible(index) {
+      const item = currentVisibleItems[index];
+      if (!item) return;
+
+      if (currentView === "campaign") {
+        selectedCampaign = { id: item.id, name: item.name };
+        selectedAdset = null;
+        currentView = "adset";
+        resetSort();
+        renderDashboard(currentPeriod, currentCustomStart, currentCustomEnd);
+        return;
       }
 
-      const dailyData = aggregateDailyRows(rows, chartStart, chartEnd);
-
-      if (!dailyData.length) {
-        return `<div class="empty-chart">Não há dados suficientes para o gráfico.</div>`;
+      if (currentView === "adset") {
+        selectedAdset = { id: item.id, name: item.name };
+        currentView = "ad";
+        resetSort();
+        renderDashboard(currentPeriod, currentCustomStart, currentCustomEnd);
       }
+    }
 
-      const width = 720;
-      const height = 320;
-      const padding = {
-        top: 24,
-        right: 70,
-        bottom: 48,
-        left: 70
-      };
-
-      const innerWidth = width - padding.left - padding.right;
-      const innerHeight = height - padding.top - padding.bottom;
-
-      const maxSpend = Math.max(...dailyData.map(item => item.spend), 1);
-      const maxMessages = Math.max(...dailyData.map(item => item.messages), 1);
-
-      const x = index => {
-        if (dailyData.length === 1) return padding.left + innerWidth / 2;
-
-        return padding.left + (index / (dailyData.length - 1)) * innerWidth;
-      };
-
-      const ySpend = value => {
-        return padding.top + innerHeight - (value / maxSpend) * innerHeight;
-      };
-
-      const yMessages = value => {
-        return padding.top + innerHeight - (value / maxMessages) * innerHeight;
-      };
-
-      const spendPoints = dailyData
-        .map((item, index) => `${x(index)},${ySpend(item.spend)}`)
-        .join(" ");
-
-      const messagesPoints = dailyData
-        .map((item, index) => `${x(index)},${yMessages(item.messages)}`)
-        .join(" ");
-
-      const horizontalLines = [0, 0.25, 0.5, 0.75, 1].map(ratio => {
-        const y = padding.top + innerHeight - ratio * innerHeight;
-        const spendLabel = formatShortMoney(maxSpend * ratio);
-        const messagesLabel = Math.round(maxMessages * ratio);
-
-        return `
-          <line x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" stroke="#eef0f4" />
-          <text x="${padding.left - 10}" y="${y + 4}" text-anchor="end" font-size="11" fill="#1877f2">${spendLabel}</text>
-          <text x="${width - padding.right + 10}" y="${y + 4}" text-anchor="start" font-size="11" fill="#10b981">${messagesLabel}</text>
-        `;
-      }).join("");
-
-      const xLabels = dailyData.map((item, index) => {
-        const shouldShow = dailyData.length <= 7 || index === 0 || index === dailyData.length - 1 || index % 2 === 0;
-
-        if (!shouldShow) return "";
-
-        return `
-          <text x="${x(index)}" y="${height - 20}" text-anchor="middle" font-size="11" fill="#6b7280">
-            ${formatDateShort(item.date)}
-          </text>
-        `;
-      }).join("");
-
-      const spendDots = dailyData.map((item, index) => `
-        <circle cx="${x(index)}" cy="${ySpend(item.spend)}" r="3.5" fill="#1877f2" />
-      `).join("");
-
-      const messagesDots = dailyData.map((item, index) => `
-        <circle cx="${x(index)}" cy="${yMessages(item.messages)}" r="3.5" fill="#10b981" />
-      `).join("");
-
+    function buildTabs() {
       return `
-        <div class="chart-header">
-          <div>
-            <h3 class="chart-title">Investimento vs Leads por dia</h3>
-            <p class="chart-subtitle">${formatDateBR(chartStart)} até ${formatDateBR(chartEnd)}</p>
-          </div>
-        </div>
-
-        <div class="legend">
-          <div class="legend-item">
-            <span class="legend-dot" style="background:#1877f2"></span>
-            Investimento
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot" style="background:#10b981"></span>
-            Leads
-          </div>
-        </div>
-
-        <svg class="chart-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="Investimento e leads por dia">
-          ${horizontalLines}
-
-          <line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}" stroke="#d1d5db" />
-          <line x1="${width - padding.right}" y1="${padding.top}" x2="${width - padding.right}" y2="${height - padding.bottom}" stroke="#d1d5db" />
-          <line x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}" stroke="#d1d5db" />
-
-          ${xLabels}
-
-          <polyline points="${spendPoints}" fill="none" stroke="#1877f2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-          <polyline points="${messagesPoints}" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-
-          ${spendDots}
-          ${messagesDots}
-
-          <text x="${padding.left}" y="14" font-size="11" fill="#1877f2">Investimento</text>
-          <text x="${width - padding.right}" y="14" text-anchor="end" font-size="11" fill="#10b981">Leads</text>
-        </svg>
-      `;
-    }
-
-    function polarToCartesian(cx, cy, r, angleInDegrees) {
-      const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
-
-      return {
-        x: cx + (r * Math.cos(angleInRadians)),
-        y: cy + (r * Math.sin(angleInRadians))
-      };
-    }
-
-    function describeDonutArc(cx, cy, outerRadius, innerRadius, startAngle, endAngle) {
-      const startOuter = polarToCartesian(cx, cy, outerRadius, endAngle);
-      const endOuter = polarToCartesian(cx, cy, outerRadius, startAngle);
-      const startInner = polarToCartesian(cx, cy, innerRadius, startAngle);
-      const endInner = polarToCartesian(cx, cy, innerRadius, endAngle);
-
-      const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
-
-      return [
-        "M", startOuter.x, startOuter.y,
-        "A", outerRadius, outerRadius, 0, largeArcFlag, 0, endOuter.x, endOuter.y,
-        "L", startInner.x, startInner.y,
-        "A", innerRadius, innerRadius, 0, largeArcFlag, 1, endInner.x, endInner.y,
-        "Z"
-      ].join(" ");
-    }
-
-    function buildDonutChart(rows) {
-      const topAds = groupRowsByDimension(rows, "ad")
-        .filter(item => item.messages > 0)
-        .sort((a, b) => b.messages - a.messages)
-        .slice(0, 5);
-
-      if (!topAds.length) {
-        return `
-          <div class="chart-header">
-            <div>
-              <h3 class="chart-title">Top 5 anúncios por leads</h3>
-              <p class="chart-subtitle">Distribuição no período selecionado</p>
-            </div>
-          </div>
-          <div class="empty-chart">Não há leads no período selecionado.</div>
-        `;
-      }
-
-      const total = topAds.reduce((sum, item) => sum + item.messages, 0);
-      const cx = 120;
-      const cy = 120;
-      const outer = 95;
-      const inner = 58;
-
-      let currentAngle = 0;
-
-      const arcs = topAds.map((item, index) => {
-        const percentage = item.messages / total;
-        const angle = percentage * 360;
-        const startAngle = currentAngle;
-        const endAngle = currentAngle + angle;
-        currentAngle = endAngle;
-
-        const color = CHART_COLORS[index % CHART_COLORS.length];
-
-        if (topAds.length === 1) {
-          return `
-            <circle cx="${cx}" cy="${cy}" r="${outer}" fill="${color}" />
-            <circle cx="${cx}" cy="${cy}" r="${inner}" fill="#ffffff" />
-          `;
-        }
-
-        return `
-          <path d="${describeDonutArc(cx, cy, outer, inner, startAngle, endAngle)}" fill="${color}" />
-        `;
-      }).join("");
-
-      const legend = topAds.map((item, index) => {
-        const color = CHART_COLORS[index % CHART_COLORS.length];
-        const shortName = safeText(item.name, "Anúncio sem nome");
-
-        return `
-          <div class="donut-legend-row">
-            <span class="legend-dot" style="background:${color}"></span>
-            <span class="donut-name" title="${shortName}">${shortName}</span>
-            <span class="donut-value">${formatNumber(item.messages)}</span>
-          </div>
-        `;
-      }).join("");
-
-      return `
-        <div class="chart-header">
-          <div>
-            <h3 class="chart-title">Top 5 anúncios por leads</h3>
-            <p class="chart-subtitle">Distribuição no período selecionado</p>
-          </div>
-        </div>
-
-        <div class="donut-layout">
-          <svg viewBox="0 0 240 240" width="210" height="210" role="img" aria-label="Top 5 anúncios por leads">
-            ${arcs}
-            <text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="22" font-weight="bold" fill="#111827">${formatNumber(total)}</text>
-            <text x="${cx}" y="${cy + 18}" text-anchor="middle" font-size="12" fill="#6b7280">leads</text>
-          </svg>
-
-          <div class="donut-legend">
-            ${legend}
-          </div>
-        </div>
-      `;
-    }
-
-    function buildDimensionButtons() {
-      return `
-        <div class="dimension-buttons">
-          <button
-            class="dimension-button ${currentDimension === "campaign" ? "active" : ""}"
-            onclick="changeDimension('campaign')"
-          >
+        <div class="manager-tabs">
+          <button class="tab-button ${currentView === "campaign" ? "active" : ""}" onclick="goToLevel('campaign')">
             Campanhas
           </button>
-
-          <button
-            class="dimension-button ${currentDimension === "adset" ? "active" : ""}"
-            onclick="changeDimension('adset')"
-          >
-            Conjuntos
+          <button class="tab-button ${currentView === "adset" ? "active" : ""}" onclick="goToLevel('adset')">
+            Conjuntos de anúncios
           </button>
-
-          <button
-            class="dimension-button ${currentDimension === "ad" ? "active" : ""}"
-            onclick="changeDimension('ad')"
-          >
+          <button class="tab-button ${currentView === "ad" ? "active" : ""}" onclick="goToLevel('ad')">
             Anúncios
           </button>
         </div>
       `;
     }
 
-    function renderDashboard(period = currentPeriod, customStart = currentCustomStart, customEnd = currentCustomEnd) {
-      const dashboard = document.getElementById("dashboard");
+    function buildBreadcrumb() {
+      const campaignLabel = selectedCampaign ? safeText(selectedCampaign.name || selectedCampaign.id, "Campanha selecionada") : "Todas as campanhas";
+      const adsetLabel = selectedAdset ? safeText(selectedAdset.name || selectedAdset.id, "Conjunto selecionado") : "Todos os conjuntos";
 
-      currentPeriod = period;
-      currentCustomStart = customStart;
-      currentCustomEnd = customEnd;
-
-      if (!dashboardData) {
-        dashboard.innerHTML = `<div class="loading">Carregando dados...</div>`;
-        return;
+      if (currentView === "campaign") {
+        return `
+          <div class="breadcrumb">
+            <button class="crumb current">Campanhas</button>
+          </div>
+        `;
       }
 
-      const allRows = normalizeRows(dashboardData);
-
-      let start = null;
-      let end = null;
-
-      if (period === "custom" && customStart && customEnd) {
-        start = parseDate(customStart);
-        end = parseDate(customEnd);
-      } else {
-        const range = getPeriodRange(allRows, period);
-        start = range.start;
-        end = range.end;
+      if (currentView === "adset") {
+        return `
+          <div class="breadcrumb">
+            <button class="crumb" onclick="goToLevel('campaign')">Campanhas</button>
+            <span>›</span>
+            <button class="crumb current">${escapeHTML(campaignLabel)}</button>
+          </div>
+        `;
       }
 
-      const filteredRows = filterRowsByDate(allRows, start, end);
-      const totals = calculateTotals(filteredRows);
-      const dimensionConfig = getDimensionConfig(currentDimension);
-      const tableRows = buildDimensionTable(filteredRows, currentDimension);
+      return `
+        <div class="breadcrumb">
+          <button class="crumb" onclick="goToLevel('campaign')">Campanhas</button>
+          <span>›</span>
+          <button class="crumb" onclick="goToLevel('adset')">${escapeHTML(campaignLabel)}</button>
+          <span>›</span>
+          <button class="crumb current">${escapeHTML(adsetLabel)}</button>
+        </div>
+      `;
+    }
 
-      const periodLabel = start && end
-        ? `${formatDateBR(start)} até ${formatDateBR(end)}`
-        : "Período não identificado";
-
-      dashboard.innerHTML = `
-        <div class="filters">
+    function buildToolbar(period, customStart, customEnd) {
+      return `
+        <div class="toolbar">
           <div class="field">
             <label>Período</label>
             <select id="periodSelect" onchange="handlePeriodChange()">
@@ -1641,126 +1294,242 @@
             <input id="customEnd" type="date" value="${customEnd}" ${period !== "custom" ? "disabled" : ""} />
           </div>
 
-          <button class="apply-button" onclick="applyFilters()">
-            Aplicar
-          </button>
-        </div>
-
-        <div class="status-card">
-          <div>
-            <strong>Última atualização:</strong>
-            ${safeText(dashboardData.updated_at || dashboardData.received_at, "Ainda não informado")}
-          </div>
-
-          <div>
-            <strong>Período exibido:</strong>
-            ${periodLabel}
-          </div>
-
-          <div class="muted">
-            ${filteredRows.length} linha(s) filtrada(s) de ${allRows.length}
-          </div>
-        </div>
-
-        <div class="cards">
-          <div class="card">
-            <div class="label">Investimento total</div>
-            <div class="value">${formatMoney(totals.spend)}</div>
-            <div class="small">Soma do período selecionado</div>
-          </div>
-
-          <div class="card">
-            <div class="label">Mensagens</div>
-            <div class="value">${formatNumber(totals.messages)}</div>
-            <div class="small">Resultados no período</div>
-          </div>
-
-          <div class="card">
-            <div class="label">Custo por mensagem</div>
-            <div class="value">${formatMoney(totals.cpl)}</div>
-            <div class="small">Investimento dividido por mensagens</div>
-          </div>
-
-          <div class="card">
-            <div class="label">Cliques</div>
-            <div class="value">${formatNumber(totals.clicks)}</div>
-            <div class="small">Cliques no link</div>
-          </div>
-
-          <div class="card">
-            <div class="label">CTR</div>
-            <div class="value">${formatPercent(totals.ctr)}</div>
-            <div class="small">Cliques / impressões</div>
-          </div>
-
-          <div class="card">
-            <div class="label">Impressões</div>
-            <div class="value">${formatNumber(totals.impressions)}</div>
-            <div class="small">Quantidade de exibições</div>
-          </div>
-
-          <div class="card">
-            <div class="label">Alcance</div>
-            <div class="value">${formatNumber(totals.reach)}</div>
-            <div class="small">Soma do alcance diário</div>
-          </div>
-
-          <div class="card">
-            <div class="label">CPM</div>
-            <div class="value">${formatMoney(totals.cpm)}</div>
-            <div class="small">Custo por mil impressões</div>
-          </div>
-        </div>
-
-        <div class="charts-grid">
-          <div class="chart-card">
-            ${buildLineChart(filteredRows, start, end)}
-          </div>
-
-          <div class="chart-card">
-            ${buildDonutChart(filteredRows)}
-          </div>
-        </div>
-
-        <div class="section-header">
-          <h2 class="section-title">${dimensionConfig.title}</h2>
-          ${buildDimensionButtons()}
-        </div>
-
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>${buildSortableHeader("Dimensão", "name")}</th>
-                <th>${buildSortableHeader("Status", "statusLabel")}</th>
-                <th>${buildSortableHeader("Mensagens", "messages")}</th>
-                <th>${buildSortableHeader("Custo/mensagem", "cpl")}</th>
-                <th>${buildSortableHeader("Cliques", "clicks")}</th>
-                <th>${buildSortableHeader("CTR", "ctr")}</th>
-                <th>${buildSortableHeader("Investimento", "spend")}</th>
-                <th>${buildSortableHeader("Impressões", "impressions")}</th>
-                <th>${buildSortableHeader("Alcance", "reach")}</th>
-                <th>${buildSortableHeader("CPM", "cpm")}</th>
-                <th>${buildSortableHeader("Dias", "daysCount")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${tableRows}
-            </tbody>
-          </table>
+          <button class="btn btn-primary" onclick="applyFilters()">Aplicar</button>
         </div>
       `;
     }
 
-    function changeDimension(dimension) {
-      currentDimension = dimension;
+    function buildCards(totals) {
+      return `
+        <section class="cards">
+          <div class="metric-card">
+            <div class="metric-label">Investimento</div>
+            <div class="metric-value">${formatMoney(totals.spend)}</div>
+            <div class="metric-helper">Soma do escopo atual</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Mensagens</div>
+            <div class="metric-value">${formatNumber(totals.messages)}</div>
+            <div class="metric-helper">Resultado principal</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Custo por mensagem</div>
+            <div class="metric-value">${formatMoney(totals.cpl)}</div>
+            <div class="metric-helper">Investimento / mensagens</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">CTR</div>
+            <div class="metric-value">${formatPercent(totals.ctr)}</div>
+            <div class="metric-helper">Cliques / impressões</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Cliques</div>
+            <div class="metric-value">${formatNumber(totals.clicks)}</div>
+            <div class="metric-helper">Cliques no link</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Impressões</div>
+            <div class="metric-value">${formatNumber(totals.impressions)}</div>
+            <div class="metric-helper">Exibições totais</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">CPM</div>
+            <div class="metric-value">${formatMoney(totals.cpm)}</div>
+            <div class="metric-helper">Custo por mil impressões</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Frequência</div>
+            <div class="metric-value">${formatDecimal(totals.frequency)}</div>
+            <div class="metric-helper">Impressões / alcance</div>
+          </div>
+        </section>
+      `;
+    }
 
-      sortState = {
-        key: "spend",
-        direction: "desc"
+    function buildTableRows(items) {
+      const config = getLevelConfig(currentView);
+
+      if (!items.length) {
+        return `
+          <tr>
+            <td colspan="13">
+              <div class="empty-state">Nenhum dado encontrado para o período ou escopo selecionado.</div>
+            </td>
+          </tr>
+        `;
+      }
+
+      return items.map((item, index) => {
+        const isClickable = currentView !== "ad";
+        const deliveryLabel = normalizeMetaStatus(item.status) === "ACTIVE" ? "Ativo" : "Inativo";
+        const deliveryClass = normalizeMetaStatus(item.status) === "ACTIVE" ? "" : "off";
+        const nextIcon = isClickable ? `<span class="drill-icon" title="${config.nextLabel}">›</span>` : "";
+
+        return `
+          <tr class="${isClickable ? "clickable-row" : ""}" ${isClickable ? `onclick="drillIntoVisible(${index})"` : ""}>
+            <td>
+              <div class="entity-cell">
+                <span class="check-square"></span>
+                <div>
+                  <div class="entity-name-row">
+                    <span class="entity-name" title="${escapeHTML(safeText(item.name, `${config.singular} sem nome`))}">${escapeHTML(safeText(item.name, `${config.singular} sem nome`))}</span>
+                    ${nextIcon}
+                  </div>
+                  <div class="entity-id">ID: ${escapeHTML(safeText(item.id, "não informado"))}</div>
+                </div>
+              </div>
+            </td>
+            <td>${buildStatusBadge(item.status)}</td>
+            <td><span class="delivery"><span class="delivery-dot ${deliveryClass}"></span>${deliveryLabel}</span></td>
+            <td class="numeric">${formatNumber(item.messages)}</td>
+            <td class="numeric">${formatMoney(item.cpl)}</td>
+            <td class="numeric">${formatNumber(item.clicks)}</td>
+            <td class="numeric">${formatPercent(item.ctr)}</td>
+            <td class="numeric">${formatMoney(item.spend)}</td>
+            <td class="numeric">${formatNumber(item.impressions)}</td>
+            <td class="numeric">${formatNumber(item.reach)}</td>
+            <td class="numeric">${formatMoney(item.cpm)}</td>
+            <td class="numeric">${formatDecimal(item.frequency)}</td>
+            <td class="numeric">${item.daysCount}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function buildTable(visibleItems, totalItems) {
+      const config = getLevelConfig(currentView);
+      const limitInfo = totalItems > 5 ? `Exibindo 5 de ${totalItems} ${config.label.toLowerCase()}.` : `Exibindo ${visibleItems.length} ${config.label.toLowerCase()}.`;
+
+      return `
+        <section class="table-card">
+          <div class="table-header">
+            <div>
+              <h3 class="table-title">${config.title}</h3>
+              <p class="table-subtitle">${config.subtitle}</p>
+            </div>
+            <p class="table-subtitle">${limitInfo}</p>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>${buildSortableHeader(config.singular, "name")}</th>
+                  <th>${buildSortableHeader("Status", "statusLabel")}</th>
+                  <th>Veiculação</th>
+                  <th>${buildSortableHeader("Mensagens", "messages")}</th>
+                  <th>${buildSortableHeader("Custo/mensagem", "cpl")}</th>
+                  <th>${buildSortableHeader("Cliques", "clicks")}</th>
+                  <th>${buildSortableHeader("CTR", "ctr")}</th>
+                  <th>${buildSortableHeader("Investimento", "spend")}</th>
+                  <th>${buildSortableHeader("Impressões", "impressions")}</th>
+                  <th>${buildSortableHeader("Alcance", "reach")}</th>
+                  <th>${buildSortableHeader("CPM", "cpm")}</th>
+                  <th>${buildSortableHeader("Frequência", "frequency")}</th>
+                  <th>${buildSortableHeader("Dias", "daysCount")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${buildTableRows(visibleItems)}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      `;
+    }
+
+    function buildAIAnalysisCard() {
+      return `
+        <section class="ai-analysis-card">
+          <div class="ai-analysis-header">
+            <div>
+              <h3 class="ai-analysis-title">Análise das métricas com IA</h3>
+              <p class="ai-analysis-subtitle">A análise usa o período, o escopo atual e no máximo 5 linhas da tabela.</p>
+            </div>
+            <button id="aiAnalysisButton" class="btn btn-primary" onclick="generateAIAnalysis()">Gerar análise com IA</button>
+          </div>
+          <div id="aiAnalysisOutput" class="ai-analysis-output">Clique no botão para gerar uma leitura executiva das métricas exibidas.</div>
+        </section>
+      `;
+    }
+
+    function buildAIContext(periodLabel, scopedTotals, visibleItems) {
+      const config = getLevelConfig(currentView);
+      const campaignLabel = selectedCampaign ? safeText(selectedCampaign.name || selectedCampaign.id, "Campanha selecionada") : "Todas as campanhas";
+      const adsetLabel = selectedAdset ? safeText(selectedAdset.name || selectedAdset.id, "Conjunto selecionado") : "Todos os conjuntos";
+
+      return {
+        periodo: periodLabel,
+        nivel_visualizado: config.label,
+        campanha_selecionada: campaignLabel,
+        conjunto_selecionado: adsetLabel,
+        objetivo: "geracao_de_mensagens_ou_leads",
+        resumo: {
+          investimento_total: scopedTotals.spend,
+          mensagens: scopedTotals.messages,
+          custo_por_mensagem: scopedTotals.cpl,
+          cliques: scopedTotals.clicks,
+          ctr: scopedTotals.ctr,
+          impressoes: scopedTotals.impressions,
+          alcance: scopedTotals.reach,
+          cpm: scopedTotals.cpm,
+          frequencia: scopedTotals.frequency
+        },
+        linhas_analisadas: visibleItems.map(item => ({
+          nome: item.name,
+          id: item.id,
+          status: item.statusLabel,
+          mensagens: item.messages,
+          custo_por_mensagem: item.cpl,
+          cliques: item.clicks,
+          ctr: item.ctr,
+          investimento: item.spend,
+          impressoes: item.impressions,
+          alcance: item.reach,
+          cpm: item.cpm,
+          frequencia: item.frequency,
+          dias: item.daysCount
+        }))
       };
+    }
 
-      renderDashboard(currentPeriod, currentCustomStart, currentCustomEnd);
+    async function generateAIAnalysis() {
+      const button = document.getElementById("aiAnalysisButton");
+      const output = document.getElementById("aiAnalysisOutput");
+
+      if (!button || !output) return;
+
+      if (!currentAIContext || !currentAIContext.linhas_analisadas.length) {
+        output.textContent = "Não há dados suficientes para gerar a análise.";
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Gerando análise...";
+      output.textContent = "Analisando métricas, aguarde...";
+
+      try {
+        const response = await fetch("/api/ai-analysis", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(currentAIContext)
+        });
+
+        if (!response.ok) {
+          throw new Error("Não foi possível gerar a análise com IA. Verifique a rota /api/ai-analysis ou o cenário do Make.");
+        }
+
+        const data = await response.json();
+        const analysis = data.analysis || data.ai_analysis || "";
+        output.textContent = analysis || "A IA não retornou uma análise para esses dados.";
+      } catch (error) {
+        output.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = "Gerar análise com IA";
+      }
     }
 
     function getDefaultCustomRange() {
@@ -1783,7 +1552,6 @@
 
       const customStartInput = document.getElementById("customStart");
       const customEndInput = document.getElementById("customEnd");
-
       const defaultRange = getDefaultCustomRange();
 
       const start = customStartInput.value || currentCustomStart || defaultRange.start;
@@ -1796,16 +1564,68 @@
       const period = document.getElementById("periodSelect").value;
       const customStart = document.getElementById("customStart").value;
       const customEnd = document.getElementById("customEnd").value;
-
       renderDashboard(period, customStart, customEnd);
+    }
+
+    function renderDashboard(period = currentPeriod, customStart = currentCustomStart, customEnd = currentCustomEnd) {
+      const dashboard = document.getElementById("dashboard");
+
+      currentPeriod = period;
+      currentCustomStart = customStart;
+      currentCustomEnd = customEnd;
+
+      if (!dashboardData) {
+        dashboard.innerHTML = `<div class="loading">Carregando dados...</div>`;
+        return;
+      }
+
+      const allRows = normalizeRows(dashboardData);
+      let start = null;
+      let end = null;
+
+      if (period === "custom" && customStart && customEnd) {
+        start = parseDate(customStart);
+        end = parseDate(customEnd);
+      } else {
+        const range = getPeriodRange(allRows, period);
+        start = range.start;
+        end = range.end;
+      }
+
+      const periodRows = filterRowsByDate(allRows, start, end);
+      const scopedRows = getScopedRows(periodRows);
+      const scopedTotals = calculateTotals(scopedRows);
+      const groupedRows = groupRowsByLevel(scopedRows, currentView);
+      const sortedRows = sortDimensionRows(groupedRows);
+      const visibleItems = sortedRows.slice(0, 5);
+      const periodLabel = start && end ? `${formatDateBR(start)} até ${formatDateBR(end)}` : "Período não identificado";
+
+      currentVisibleItems = visibleItems;
+      currentAIContext = buildAIContext(periodLabel, scopedTotals, visibleItems);
+
+      dashboard.innerHTML = `
+        <section class="manager-panel">
+          ${buildTabs()}
+          ${buildToolbar(period, customStart, customEnd)}
+          <div class="context-row">
+            ${buildBreadcrumb()}
+            <div class="context-meta">
+              <span><strong>Período:</strong> ${escapeHTML(periodLabel)}</span>
+              <span><strong>Última atualização:</strong> ${escapeHTML(safeText(dashboardData.updated_at || dashboardData.received_at, "Ainda não informado"))}</span>
+              <span><strong>Linhas base:</strong> ${scopedRows.length} de ${periodRows.length}</span>
+            </div>
+          </div>
+        </section>
+
+        ${buildCards(scopedTotals)}
+        ${buildTable(visibleItems, sortedRows.length)}
+        ${buildAIAnalysisCard()}
+      `;
     }
 
     async function loadDashboard() {
       const dashboard = document.getElementById("dashboard");
-
-      dashboard.innerHTML = `
-        <div class="loading">Carregando dados...</div>
-      `;
+      dashboard.innerHTML = `<div class="loading">Carregando dados...</div>`;
 
       try {
         const response = await fetch("/api/webhook", {
@@ -1817,14 +1637,14 @@
         }
 
         dashboardData = await response.json();
-
+        resetSort();
         renderDashboard("last_7d", "", "");
       } catch (error) {
         dashboard.innerHTML = `
           <div class="error">
             <strong>Erro ao carregar o dashboard.</strong>
             <br><br>
-            ${error.message}
+            ${escapeHTML(error.message)}
           </div>
         `;
       }
