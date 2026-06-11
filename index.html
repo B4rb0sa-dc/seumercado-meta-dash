@@ -299,7 +299,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1120px;
+      min-width: 1220px;
     }
 
     th, td {
@@ -352,6 +352,33 @@
       font-size: 12px;
       color: #6b7280;
       word-break: break-all;
+    }
+
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .status-active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-inactive {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .status-missing {
+      background: #f3f4f6;
+      color: #6b7280;
     }
 
     .loading,
@@ -658,7 +685,14 @@
         return toNumber(actions);
       }
 
-      const preferredAction = actions.find(action => {
+      const targetActionTypes = [
+        "onsite_conversion.messaging_conversation_started_7d",
+        "onsite_conversion.messaging_conversation_started",
+        "messaging_conversation_started_7d",
+        "messaging_conversation_started"
+      ];
+
+      return actions.reduce((total, action) => {
         const type = String(
           action.action_type ||
           action["Action Type"] ||
@@ -666,27 +700,21 @@
           ""
         ).toLowerCase();
 
-        return (
-          type.includes("messaging") ||
-          type.includes("message") ||
-          type.includes("whatsapp") ||
-          type.includes("lead")
-        );
-      });
+        if (!targetActionTypes.includes(type)) {
+          return total;
+        }
 
-      const fallbackAction = actions.find(action =>
-        action.value !== undefined ||
-        action.Value !== undefined
-      );
-
-      const action = preferredAction || fallbackAction;
-
-      if (!action) return 0;
-
-      return toNumber(action.value || action.Value || 0);
+        return total + toNumber(action.value || action.Value || 0);
+      }, 0);
     }
 
     function getMessages(row) {
+      const actions = getField(row, "actions", "Actions");
+
+      if (actions) {
+        return getActionValue(actions);
+      }
+
       const directMessages = getField(
         row,
         "messages",
@@ -695,15 +723,7 @@
         "Results"
       );
 
-      const directValue = toNumber(directMessages);
-
-      if (directValue > 0) {
-        return directValue;
-      }
-
-      const actions = getField(row, "actions", "Actions");
-
-      return getActionValue(actions);
+      return toNumber(directMessages);
     }
 
     function getRowDate(row) {
@@ -807,6 +827,168 @@
       }
 
       return [];
+    }
+
+
+
+    function normalizeStatusRows(data, keys) {
+      for (const key of keys) {
+        const source = data[key];
+
+        if (!source) continue;
+
+        if (typeof source === "string") {
+          try {
+            return normalizeStatusRows({ [key]: JSON.parse(source) }, [key]);
+          } catch {
+            return [];
+          }
+        }
+
+        if (Array.isArray(source)) {
+          return source
+            .flatMap(item => Array.isArray(item) ? item : [item])
+            .filter(Boolean);
+        }
+      }
+
+      return [];
+    }
+
+    function getStatusId(item, ...keys) {
+      return String(getField(item, ...keys) || "").trim();
+    }
+
+    function buildStatusMap(items, ...idKeys) {
+      const map = new Map();
+
+      items.forEach(item => {
+        const id = getStatusId(item, ...idKeys);
+
+        if (!id) return;
+
+        map.set(id, item);
+      });
+
+      return map;
+    }
+
+    function getStatusSources() {
+      const data = dashboardData || {};
+
+      const campaignStatuses = normalizeStatusRows(data, [
+        "campaign_statuses",
+        "campaignStatuses"
+      ]);
+
+      const adsetStatuses = normalizeStatusRows(data, [
+        "adset_statuses",
+        "adsetStatuses"
+      ]);
+
+      const adStatuses = normalizeStatusRows(data, [
+        "ad_statuses",
+        "adStatuses"
+      ]);
+
+      return {
+        campaignMap: buildStatusMap(campaignStatuses, "id", "campaign_id", "Campaign ID"),
+        adsetMap: buildStatusMap(adsetStatuses, "id", "adset_id", "Adset ID", "Ad Set ID"),
+        adMap: buildStatusMap(adStatuses, "id", "ad_id", "Ad ID")
+      };
+    }
+
+    function getRawStatus(statusItem) {
+      if (!statusItem) return "";
+
+      return getField(
+        statusItem,
+        "effective_status",
+        "Effective Status",
+        "configured_status",
+        "Configured Status",
+        "status",
+        "Status"
+      );
+    }
+
+    function normalizeMetaStatus(status) {
+      return String(status || "").trim().toUpperCase();
+    }
+
+    function isActiveStatus(status) {
+      const value = normalizeMetaStatus(status);
+
+      return value === "ACTIVE" || value === "ENABLED";
+    }
+
+    function resolveStatusFromValues(statusValues) {
+      const cleanStatuses = statusValues
+        .map(normalizeMetaStatus)
+        .filter(Boolean);
+
+      if (!cleanStatuses.length) {
+        return "NO_STATUS";
+      }
+
+      if (cleanStatuses.some(isActiveStatus)) {
+        return "ACTIVE";
+      }
+
+      return "INACTIVE";
+    }
+
+    function translateDisplayStatus(status) {
+      const value = normalizeMetaStatus(status);
+
+      if (value === "ACTIVE") return "Ativo";
+      if (value === "INACTIVE") return "Inativo";
+
+      return "Sem status";
+    }
+
+    function getDisplayStatusClass(status) {
+      const value = normalizeMetaStatus(status);
+
+      if (value === "ACTIVE") return "status-active";
+      if (value === "INACTIVE") return "status-inactive";
+
+      return "status-missing";
+    }
+
+    function buildStatusBadge(status) {
+      const label = translateDisplayStatus(status);
+      const className = getDisplayStatusClass(status);
+
+      return `<span class="status-badge ${className}">${label}</span>`;
+    }
+
+    function getObjectStatusForRow(row, dimension, statusSources) {
+      const campaignId = String(getField(row, "campaign_id", "Campaign ID") || "").trim();
+      const adsetId = String(getField(row, "adset_id", "Adset ID", "Ad Set ID") || "").trim();
+      const adId = String(getField(row, "ad_id", "Ad ID") || "").trim();
+
+      if (dimension === "campaign" && campaignId) {
+        const campaignStatus = getRawStatus(statusSources.campaignMap.get(campaignId));
+        if (campaignStatus) return campaignStatus;
+      }
+
+      if (dimension === "adset" && adsetId) {
+        const adsetStatus = getRawStatus(statusSources.adsetMap.get(adsetId));
+        if (adsetStatus) return adsetStatus;
+      }
+
+      if (dimension === "ad" && adId) {
+        const adStatus = getRawStatus(statusSources.adMap.get(adId));
+        if (adStatus) return adStatus;
+      }
+
+      if (adId) {
+        const adStatus = getRawStatus(statusSources.adMap.get(adId));
+        if (adStatus) return adStatus;
+      }
+
+      return "";
     }
 
     function getAvailableDateRange(rows) {
@@ -937,6 +1119,7 @@
     function groupRowsByDimension(rows, dimension) {
       const config = getDimensionConfig(dimension);
       const groups = new Map();
+      const statusSources = getStatusSources();
 
       rows.forEach(row => {
         const dimensionName = getField(row, ...config.nameKeys);
@@ -952,7 +1135,8 @@
             clicks: 0,
             impressions: 0,
             reach: 0,
-            days: new Set()
+            days: new Set(),
+            statuses: []
           });
         }
 
@@ -969,16 +1153,28 @@
         if (rowKey) {
           item.days.add(rowKey);
         }
+
+        const rowStatus = getObjectStatusForRow(row, dimension, statusSources);
+
+        if (rowStatus) {
+          item.statuses.push(rowStatus);
+        }
       });
 
-      return Array.from(groups.values()).map(item => ({
-        ...item,
-        cpl: item.messages > 0 ? item.spend / item.messages : 0,
-        ctr: item.impressions > 0 ? (item.clicks / item.impressions) * 100 : 0,
-        cpm: item.impressions > 0 ? (item.spend / item.impressions) * 1000 : 0,
-        frequency: item.reach > 0 ? item.impressions / item.reach : 0,
-        daysCount: item.days.size
-      }));
+      return Array.from(groups.values()).map(item => {
+        const status = resolveStatusFromValues(item.statuses);
+
+        return {
+          ...item,
+          status,
+          statusLabel: translateDisplayStatus(status),
+          cpl: item.messages > 0 ? item.spend / item.messages : 0,
+          ctr: item.impressions > 0 ? (item.clicks / item.impressions) * 100 : 0,
+          cpm: item.impressions > 0 ? (item.spend / item.impressions) * 1000 : 0,
+          frequency: item.reach > 0 ? item.impressions / item.reach : 0,
+          daysCount: item.days.size
+        };
+      });
     }
 
     function sortDimensionRows(rows) {
@@ -988,7 +1184,7 @@
         let valueA = a[key];
         let valueB = b[key];
 
-        if (key === "name") {
+        if (key === "name" || key === "statusLabel") {
           valueA = String(valueA || "").toLowerCase();
           valueB = String(valueB || "").toLowerCase();
 
@@ -1009,7 +1205,7 @@
         sortState.direction = sortState.direction === "asc" ? "desc" : "asc";
       } else {
         sortState.key = key;
-        sortState.direction = key === "name" ? "asc" : "desc";
+        sortState.direction = key === "name" || key === "statusLabel" ? "asc" : "desc";
       }
 
       renderDashboard(currentPeriod, currentCustomStart, currentCustomEnd);
@@ -1037,7 +1233,7 @@
       if (!groupedRows.length) {
         return `
           <tr>
-            <td colspan="10">Nenhum dado encontrado para o período selecionado.</td>
+            <td colspan="11">Nenhum dado encontrado para o período selecionado.</td>
           </tr>
         `;
       }
@@ -1048,6 +1244,7 @@
             <div class="dimension-name">${safeText(item.name, `${config.label} sem nome`)}</div>
             <div class="dimension-id">ID: ${safeText(item.id, "não informado")}</div>
           </td>
+          <td data-label="Status">${buildStatusBadge(item.status)}</td>
           <td data-label="Mensagens">${formatNumber(item.messages)}</td>
           <td data-label="Custo/mensagem">${formatMoney(item.cpl)}</td>
           <td data-label="Cliques">${formatNumber(item.clicks)}</td>
@@ -1535,6 +1732,7 @@
             <thead>
               <tr>
                 <th>${buildSortableHeader("Dimensão", "name")}</th>
+                <th>${buildSortableHeader("Status", "statusLabel")}</th>
                 <th>${buildSortableHeader("Mensagens", "messages")}</th>
                 <th>${buildSortableHeader("Custo/mensagem", "cpl")}</th>
                 <th>${buildSortableHeader("Cliques", "clicks")}</th>
